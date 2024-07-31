@@ -131,6 +131,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Source\BoardTile\BoardTileController.cpp" />
+    <ClCompile Include="Source\BoardTile\BoardTileModel.cpp" />
+    <ClCompile Include="Source\BoardTile\BoardTileService.cpp" />
+    <ClCompile Include="Source\BoardTile\BoardTileView.cpp" />
     <ClCompile Include="Source\Event\EventService.cpp" />
     <ClCompile Include="Source\Gameplay\GameplayController.cpp" />
     <ClCompile Include="Source\Gameplay\GameplayService.cpp" />
@@ -147,6 +151,11 @@
     <ClCompile Include="Source\UI\UIService.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Header\BoardTile\BoardTileConfig.h" />
+    <ClInclude Include="Header\BoardTile\BoardTileController.h" />
+    <ClInclude Include="Header\BoardTile\BoardTileModel.h" />
+    <ClInclude Include="Header\BoardTile\BoardTileView.h" />
+    <ClInclude Include="Header\BoardTile\BoardTileService.h" />
     <ClInclude Include="Header\Event\EventService.h" />
     <ClInclude Include="Header\Gameplay\GameplayController.h" />
     <ClInclude Include="Header\Gameplay\GameplayService.h" />
