@@ -20,6 +20,7 @@ namespace BoardTile
 		void initialize(sf::Vector2f position);
 
 		BoardTileType getBoardTileType();
+		void setBoardTileType(BoardTileType type);
 
 		sf::Vector2f getBoardTilePosition();
 	};

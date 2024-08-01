@@ -24,6 +24,11 @@ namespace BoardTile
 		return board_tile_type;
 	}
 
+	void BoardTileModel::setBoardTileType(BoardTileType type)
+	{
+		board_tile_type=type;
+	}
+
 	sf::Vector2f BoardTileModel::getBoardTilePosition()
 	{
 		return board_tile_position;

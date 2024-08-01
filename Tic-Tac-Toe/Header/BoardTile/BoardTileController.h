@@ -14,8 +14,6 @@ namespace BoardTile
 		BoardTileView* board_tile_view;
 		BoardTileModel* board_tile_model;
 
-		virtual void destroy();
-
 	public:
 		BoardTileController(BoardTileType type);
 		virtual ~BoardTileController();
@@ -25,7 +23,9 @@ namespace BoardTile
 		void render();
 
 		BoardTileType getBoardTileType();
+		void setBoardTileType(BoardTileType type);
 
+		const sf::Sprite& getTileSprite();
 		sf::Vector2f getBoardTilePosition();
 
 	};

@@ -20,6 +20,8 @@ namespace BoardTile
 		void createUIElements();
 		void initializeImage();
 		sf::String getBoardTileTexturePath();
+		void updateBoardTileImage();
+
 		void destroy();
 
 	public:
@@ -29,6 +31,8 @@ namespace BoardTile
 		void initialize(BoardTileController* controller);
 		void update();
 		void render();
+
+		const sf::Sprite& getTileSprite();
 
 	};
 

@@ -40,12 +40,24 @@ namespace BoardTile
 
 	void BoardTileView::update()
 	{
+		updateBoardTileImage();
 		board_tile_image->update();
 	}
 
 	void BoardTileView::render()
 	{
 		board_tile_image->render();
+	}
+
+	const sf::Sprite& BoardTileView::getTileSprite()
+	{
+		return board_tile_image->getSprite();
+
+	}
+
+	void BoardTileView::updateBoardTileImage()
+	{
+		board_tile_image->setTexture(getBoardTileTexturePath());
 	}
 
 
