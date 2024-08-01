@@ -5,7 +5,7 @@
 #include "../../Header/UI/UIService.h"
 #include "../../Header/Gameplay/GameplayService.h"
 #include "../../Header/Time/TimeService.h"
-
+#include "../../Header/BoardTile/BoardTileService.h"
 
 namespace Global
 {
@@ -21,6 +21,7 @@ namespace Global
         UI::UIService* ui_service;
         Gameplay::GameplayService* gameplay_service;
         Time::TimeService* time_service;
+        BoardTile::BoardTileService* board_tile_service;
 
         void createServices();
         void clearAllServices();
@@ -38,6 +39,7 @@ namespace Global
         UI::UIService* getUIService();
         Gameplay::GameplayService* getGameplayService();
         Time::TimeService* getTimeService();
+        BoardTile::BoardTileService* getBoardTileService();
 
         void deleteServiceLocator();
     };
