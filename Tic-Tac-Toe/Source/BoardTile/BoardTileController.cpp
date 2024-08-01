@@ -37,11 +37,6 @@ namespace BoardTile
 		board_tile_view->render();
 	}
 
-	void BoardTileController::destroy()
-	{
-		ServiceLocator::getInstance()->getBoardTileService()->destroyBoardTile(this);
-	}
-
 	BoardTileType BoardTileController::getBoardTileType()
 	{
 		return board_tile_model->getBoardTileType();
@@ -51,4 +46,15 @@ namespace BoardTile
 	{
 		return board_tile_model->getBoardTilePosition();
 	}
+
+	const sf::Sprite& BoardTileController::getTileSprite()
+	{
+		return board_tile_view->getTileSprite();
+	}
+
+	void BoardTileController::setBoardTileType(BoardTileType type)
+	{
+		board_tile_model->setBoardTileType(type);
+	}
+
 }

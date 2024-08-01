@@ -11,7 +11,6 @@ namespace BoardTile
 	{
 	private:
 		std::vector<BoardTileController*> board_tile_list;
-		std::vector<BoardTileController*> flagged_BoardTile_list;
 		std::vector<sf::Vector2f> board_tile_position_list;
 
 		const int board_row_col_size = 3;
@@ -20,7 +19,6 @@ namespace BoardTile
 		const float board_tile_offset = 300.f;
 
 		void destroy();
-		void destroyFlaggedBoardTiles();
 
 	public:
 		BoardTileService();
@@ -32,7 +30,7 @@ namespace BoardTile
 		void reset();
 
 		BoardTileController* spawnBoardTile(sf::Vector2f);
-		void destroyBoardTile(BoardTileController* BoardTile_controller);
+		void clickedOnBoardTile(sf::Vector2f mouse_position);
 
 	};
 }
