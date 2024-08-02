@@ -30,5 +30,8 @@ namespace Player
 
 		sf::Vector2f getPlayerPosition();
 
+		PlayerSymbol getPlayerSymbol();
+		void setPlayerSymbol(PlayerSymbol symbol);
+
 	};
 }

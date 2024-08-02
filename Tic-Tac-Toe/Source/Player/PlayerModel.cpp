@@ -5,7 +5,7 @@ namespace Player
 {
 	using namespace Global;
 
-	int PlayerModel::player_lives;
+	int PlayerModel::player_move;
 
 	PlayerModel::PlayerModel()
 	{
@@ -19,12 +19,13 @@ namespace Player
 
 	void PlayerModel::initialize()
 	{
+		player_symbol = PlayerSymbol::PLAYER_O;
 		reset();
 	}
 
 	void PlayerModel::reset()
 	{
-		player_lives = max_player_lives;
+		player_move = max_player_move;
 	}
 
 	sf::Vector2f PlayerModel::getPlayerPosition()
@@ -35,6 +36,29 @@ namespace Player
 	void PlayerModel::setPlayerPosition(sf::Vector2f position)
 	{
 		player_position = position;
+	}
+
+	PlayerSymbol PlayerModel::getPlayerSymbol()
+	{
+		return player_symbol;
+	}
+
+	int PlayerModel::getPlayerMovesLeft()
+	{
+		return player_move;
+	}
+
+	void PlayerModel::decreasePlayerMove()
+	{
+		if (player_move > 0)
+		{
+			player_move -= 1;
+		}
+	}
+
+	void PlayerModel::setPlayerSymbol(PlayerSymbol symbol)
+	{
+		player_symbol = symbol;
 	}
 
 }

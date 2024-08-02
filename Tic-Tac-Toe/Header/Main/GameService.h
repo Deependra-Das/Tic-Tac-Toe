@@ -7,6 +7,7 @@ namespace Main
 	enum class GameState
 	{
 		BOOT,
+		SELECTION,
 		GAMEPLAY,
 
 	};

@@ -7,10 +7,11 @@ namespace UI
 	using namespace Main;
 	using namespace Interface;
 	using namespace UIElement;
-
+	using namespace SymbolSelectionUI;
 
 	UIService::UIService()
 	{
+		symbol_selection_ui_controller = nullptr;
 		createControllers();
 	}
 
@@ -21,7 +22,7 @@ namespace UI
 
 	void UIService::createControllers()
 	{
-
+		symbol_selection_ui_controller = new SymbolSelectionUIController();
 	}
 
 	void UIService::initialize()
@@ -32,7 +33,7 @@ namespace UI
 
 	void UIService::initializeControllers()
 	{
-
+		symbol_selection_ui_controller->initialize();
 	}
 
 	void UIService::update()
@@ -70,7 +71,8 @@ namespace UI
 	{
 		switch (GameService::getGameState())
 		{
-
+		case GameState::SELECTION:
+			return symbol_selection_ui_controller;
 		default:
 			return nullptr;
 		}

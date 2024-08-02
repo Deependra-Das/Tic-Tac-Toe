@@ -28,7 +28,7 @@ namespace Main
 	{
 		service_locator->initialize();
 		initializeVariables();
-		setGameState(GameState::GAMEPLAY);
+		setGameState(GameState::SELECTION);
 	}
 
 	void GameService::initializeVariables()

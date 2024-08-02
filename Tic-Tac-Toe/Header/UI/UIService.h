@@ -1,13 +1,14 @@
 #pragma once
 
 #include "../../Header/UI/Interface/IUIController.h"
-
+#include "../../Header/UI/SymbolSelectionUI/SymbolSelectionUIController.h"
 
 namespace UI
 {
 	class UIService
 	{
 	private:
+		SymbolSelectionUI::SymbolSelectionUIController* symbol_selection_ui_controller;
 
 		void createControllers();
 		void initializeControllers();

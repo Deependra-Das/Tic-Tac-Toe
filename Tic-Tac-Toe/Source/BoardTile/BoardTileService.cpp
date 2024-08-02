@@ -62,21 +62,22 @@ namespace BoardTile
 		return board_tile_controller;
 	}
 
-
-	void BoardTileService::clickedOnBoardTile(sf::Vector2f mouse_position)
+	int BoardTileService::clickedOnBoardTile(sf::Vector2f mouse_position)
 	{
+		int flagged_index = -1;
 		for (int i = 0; i < board_tile_list.size(); i++)
 		{
 			if (board_tile_list[i]->getTileSprite().getGlobalBounds().contains(mouse_position))
 			{
 				if (board_tile_list[i]->getBoardTileType() == BoardTileType::Blank)
 				{
-					board_tile_list[i]->setBoardTileType(BoardTileType::Flagged_X);
+					flagged_index = i;
 				}
 			}
 
 		}
 
+		return flagged_index;
 	}
 
 	void BoardTileService::destroy()
@@ -93,5 +94,12 @@ namespace BoardTile
 		destroy();
 
 	}
+
+	void BoardTileService::switchBoardTile(int index, BoardTileType tile_type)
+	{
+		board_tile_list[index]->setBoardTileType(tile_type);
+
+	}
+
 
 }

@@ -30,7 +30,10 @@ namespace BoardTile
 		void reset();
 
 		BoardTileController* spawnBoardTile(sf::Vector2f);
-		void clickedOnBoardTile(sf::Vector2f mouse_position);
-
+		bool checkBoardForBlankTiles();
+		int clickedOnBoardTile(sf::Vector2f mouse_position);
+		bool checkConsecutiveTiles(BoardTileType player_type);
+		void switchBoardTile(int index, BoardTileType tile_type);
+		std::vector<int> getBlankTilesIndex();
 	};
 }
