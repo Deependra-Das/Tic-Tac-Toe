@@ -14,6 +14,7 @@ namespace Player
 	using namespace Event;
 	using namespace Time;
 	using namespace Main;
+	using namespace Gameplay;
 
 	PlayerController::PlayerController()
 	{
@@ -72,13 +73,32 @@ namespace Player
 
 	void PlayerController::processTileClick(sf::Vector2f mouse_position)
 	{
-		ServiceLocator::getInstance()->getBoardTileService()->clickedOnBoardTile(mouse_position);
-	}
+		if (ServiceLocator::getInstance()->getGameplayService()->getMoveTurn()==MoveTurn::Player_1 && player_model->getPlayerMovesLeft())
+		{
+			int index = ServiceLocator::getInstance()->getGameplayService()->checkValidMove(mouse_position);
 
+			if (index != -1)
+			{
+				ServiceLocator::getInstance()->getGameplayService()->makeMove(index);
+				player_model->decreasePlayerMove();
+			}
+		}
+	
+	}
 
 	sf::Vector2f PlayerController::getPlayerPosition()
 	{
 		return player_model->getPlayerPosition();
+	}
+
+	PlayerSymbol PlayerController::getPlayerSymbol()
+	{
+		return player_model->getPlayerSymbol();
+	}
+
+	void PlayerController::setPlayerSymbol(PlayerSymbol symbol)
+	{
+		player_model->setPlayerSymbol(symbol);
 	}
 
 }

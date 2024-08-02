@@ -46,7 +46,7 @@ namespace Gameplay
 
 	sf::String GameplayView::getBackgroundTexturePath()
 	{
-		return Config::background_blue_texture_path;
+		return Config::background_texture_path;
 	}
 
 	void GameplayView::destroy()

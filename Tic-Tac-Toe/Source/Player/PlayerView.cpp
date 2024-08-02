@@ -37,6 +37,7 @@ namespace Player
 	void PlayerView::update()
 	{
 		player_image->setPosition(player_controller->getPlayerPosition());
+		player_image->setTexture(getPlayerTexturePath());
 		player_image->update();
 	}
 
@@ -47,7 +48,16 @@ namespace Player
 
 	sf::String PlayerView::getPlayerTexturePath()
 	{
-		return Config::flagged_X_tile_texture_path;
+		switch (player_controller->getPlayerSymbol())
+		{
+		case::Player::PlayerSymbol::PLAYER_X:
+			return Config::player_X_texture;
+
+		case::Player::PlayerSymbol::PLAYER_O:
+			return Config::player_O_texture;
+
+		}
+
 	}
 
 	void PlayerView::destroy()

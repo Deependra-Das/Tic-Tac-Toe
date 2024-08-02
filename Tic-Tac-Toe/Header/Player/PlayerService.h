@@ -3,6 +3,7 @@
 namespace Player
 {
 	class PlayerController;
+	enum class PlayerSymbol;
 
 	class PlayerService
 	{
@@ -18,6 +19,9 @@ namespace Player
 		void render();
 
 		void reset();
+
+		PlayerSymbol getPlayerSymbol();
+		void setPlayerSymbol(PlayerSymbol symbol);
 
 	};
 }

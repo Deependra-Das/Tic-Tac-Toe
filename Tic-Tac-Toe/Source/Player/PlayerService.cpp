@@ -37,4 +37,14 @@ namespace Player
 		player_controller->reset();
 	}
 
+	PlayerSymbol PlayerService::getPlayerSymbol()
+	{
+		return player_controller->getPlayerSymbol();
+	}
+
+	void PlayerService::setPlayerSymbol(PlayerSymbol symbol)
+	{
+		player_controller->setPlayerSymbol(symbol);
+	}
+
 }
