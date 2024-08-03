@@ -4,6 +4,7 @@
 #include "../../Header/UI/Interface/IUIController.h"
 #include "../../Header/UI/UIElement/ImageView.h"
 #include "../../Header/UI/UIElement/ButtonView.h"
+#include "../../header/UI/UIElement/TextView.h"
 #include "../../Player/PlayerModel.h"
 
 namespace UI
@@ -29,6 +30,13 @@ namespace UI
 
 			const float background_image_alpha = 90.0f;
 
+			const int font_size = 48;
+			const float turn_text_y_position = 100.f;
+			const float turn_text_x_position = 850.f;
+			const sf::Color text_color = sf::Color::White;
+
+			UI::UIElement::TextView* select_text;
+
 			UIElement::ImageView* background_image;
 			UIElement::ButtonView* continue_button;
 			UIElement::ButtonView* select_X_button;
@@ -42,6 +50,7 @@ namespace UI
 			void createButtons();
 			void initializeBackgroundImage();
 			void initializeButtons();
+			void initializeText();
 			void registerButtonCallback();
 			void ContinueButtonCallback();
 			void SelectXButtonCallback();

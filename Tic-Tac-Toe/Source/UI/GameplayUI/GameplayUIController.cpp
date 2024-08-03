@@ -38,8 +38,8 @@ namespace UI
 
         void GameplayUIController::initializeText()
         {
-            sf::String lives_remaining_string = "YOUR TURN";
-            turn_text->initialize(lives_remaining_string, sf::Vector2f(turn_text_x_position, turn_text_y_position), FontType::Rajdhani, font_size, text_color);
+            sf::String current_turn_string = "YOUR TURN";
+            turn_text->initialize(current_turn_string, sf::Vector2f(turn_text_x_position, turn_text_y_position), FontType::Rajdhani, font_size, text_color);
             turn_text->setsetCentreAlingedText();
         }
 

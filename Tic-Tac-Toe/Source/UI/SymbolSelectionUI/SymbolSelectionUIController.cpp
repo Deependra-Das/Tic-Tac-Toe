@@ -29,6 +29,7 @@ namespace UI
         {
             check_selected = false;
             initializeBackgroundImage();
+            initializeText();
             initializeButtons();
             registerButtonCallback();
         }
@@ -44,6 +45,7 @@ namespace UI
             continue_button = new ButtonView();
             select_X_button = new ButtonView();
             select_O_button = new ButtonView();
+            select_text = new TextView();
         }
 
         void SymbolSelectionUIController::initializeBackgroundImage()
@@ -52,6 +54,13 @@ namespace UI
 
             background_image->initialize(Config::background_texture_path, game_window->getSize().x, game_window->getSize().y, sf::Vector2f(0, 0));
             background_image->setImageAlpha(background_image_alpha);
+        }
+
+        void SymbolSelectionUIController::initializeText()
+        {
+            sf::String current_turn_string = "Select a Symbol/Mark to Continue:";
+            select_text->initialize(current_turn_string, sf::Vector2f(turn_text_x_position, turn_text_y_position), FontType::Rajdhani, font_size, text_color);
+            select_text->setsetCentreAlingedText();
         }
 
 
@@ -112,6 +121,7 @@ namespace UI
             select_X_button->update();
             select_O_button->update();
             continue_button->update();
+            select_text->update();
         }
 
         void SymbolSelectionUIController::render()
@@ -120,6 +130,7 @@ namespace UI
             select_X_button->render();
             select_O_button->render();
             continue_button->render();
+            select_text->render();
         }
 
         void SymbolSelectionUIController::show()
@@ -128,7 +139,7 @@ namespace UI
             select_X_button->show();
             select_O_button->show();
             continue_button->show();
-
+            select_text->show();
         }
 
         void SymbolSelectionUIController::destroy()
@@ -137,6 +148,7 @@ namespace UI
             delete (background_image);
             delete (select_X_button);
             delete (select_O_button);
+            delete (select_text);
         }
     }
 }
