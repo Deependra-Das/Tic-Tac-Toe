@@ -41,7 +41,7 @@ namespace UI
 
         void SymbolSelectionUIController::createButtons()
         {
-            menu_button = new ButtonView();
+            continue_button = new ButtonView();
             select_X_button = new ButtonView();
             select_O_button = new ButtonView();
         }
@@ -57,9 +57,9 @@ namespace UI
 
         void SymbolSelectionUIController::initializeButtons()
         {
-            menu_button->initialize("Menu Button", Config::flagged_X_tile_texture_path, button_width, button_height, sf::Vector2f(0, menu_button_y_position));
-            menu_button->setCentreAlinged();
-            menu_button->setImageAlpha(90.f);
+            continue_button->initialize("Continue Button", Config::continue_button_texture, button_width, button_height, sf::Vector2f(0, menu_button_y_position));
+            continue_button->setCentreAlinged();
+            continue_button->setImageAlpha(90.f);
             select_X_button->initialize("Select X Button", Config::flagged_X_tile_texture_path, select_button_width, select_button_height, sf::Vector2f(select_X_button_x_position, select_button_y_position));
             select_X_button->setImageAlpha(90.f);
             select_O_button->initialize("Select O Button", Config::flagged_O_tile_texture_path, select_button_width, select_button_height, sf::Vector2f(select_O_button_x_position, select_button_y_position));
@@ -68,14 +68,14 @@ namespace UI
 
         void SymbolSelectionUIController::registerButtonCallback()
         {
-            menu_button->registerCallbackFuntion(std::bind(&SymbolSelectionUIController::MenuButtonCallback, this));
+            continue_button->registerCallbackFuntion(std::bind(&SymbolSelectionUIController::ContinueButtonCallback, this));
             select_X_button->registerCallbackFuntion(std::bind(&SymbolSelectionUIController::SelectXButtonCallback, this));
             select_O_button->registerCallbackFuntion(std::bind(&SymbolSelectionUIController::SelectOButtonCallback, this));
 
         }
 
 
-        void SymbolSelectionUIController::MenuButtonCallback()
+        void SymbolSelectionUIController::ContinueButtonCallback()
         {
             if (check_selected == true)
             {
@@ -93,7 +93,7 @@ namespace UI
             select_X_button->setImageAlpha(255.f);
             select_O_button->setImageAlpha(90.f);
             check_selected = true;
-            menu_button->setImageAlpha(255.f);
+            continue_button->setImageAlpha(255.f);
         }
 
         void SymbolSelectionUIController::SelectOButtonCallback()
@@ -103,7 +103,7 @@ namespace UI
             select_O_button->setImageAlpha(255.f);
             select_X_button->setImageAlpha(90.f);
             check_selected = true;
-            menu_button->setImageAlpha(255.f);
+            continue_button->setImageAlpha(255.f);
         }
 
         void SymbolSelectionUIController::update()
@@ -111,7 +111,7 @@ namespace UI
             background_image->update();
             select_X_button->update();
             select_O_button->update();
-            menu_button->update();
+            continue_button->update();
         }
 
         void SymbolSelectionUIController::render()
@@ -119,7 +119,7 @@ namespace UI
             background_image->render();
             select_X_button->render();
             select_O_button->render();
-            menu_button->render();
+            continue_button->render();
         }
 
         void SymbolSelectionUIController::show()
@@ -127,13 +127,13 @@ namespace UI
             background_image->show();
             select_X_button->show();
             select_O_button->show();
-            menu_button->show();
+            continue_button->show();
 
         }
 
         void SymbolSelectionUIController::destroy()
         {
-            delete (menu_button);
+            delete (continue_button);
             delete (background_image);
             delete (select_X_button);
             delete (select_O_button);

@@ -20,19 +20,8 @@ namespace BoardTile
 
 	void BoardTileService::initialize()
 	{
-		for (int i = 0; i < board_row_col_size; i++)
-		{
-			for (int j = 0; j < board_row_col_size; j++)
-			{
-				sf::Vector2f new_position = sf::Vector2f(board_tile_x_pos + (j * board_tile_offset), board_tile_y_pos + ( i * board_tile_offset));
-
-				board_tile_position_list.push_back(new_position);
-
-				spawnBoardTile(new_position);
-			}
-
-		}
 	
+		reset();
 
 	}
 
@@ -92,6 +81,19 @@ namespace BoardTile
 	void BoardTileService::reset()
 	{
 		destroy();
+
+		for (int i = 0; i < board_row_col_size; i++)
+		{
+			for (int j = 0; j < board_row_col_size; j++)
+			{
+				sf::Vector2f new_position = sf::Vector2f(board_tile_x_pos + (j * board_tile_offset), board_tile_y_pos + (i * board_tile_offset));
+
+				board_tile_position_list.push_back(new_position);
+
+				spawnBoardTile(new_position);
+			}
+
+		}
 
 	}
 

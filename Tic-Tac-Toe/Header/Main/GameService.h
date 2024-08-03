@@ -7,9 +7,10 @@ namespace Main
 	enum class GameState
 	{
 		BOOT,
+		MAINMENU,
 		SELECTION,
 		GAMEPLAY,
-
+		GAMEOVER,
 	};
 
 	class GameService
