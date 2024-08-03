@@ -30,7 +30,7 @@ namespace UI
 			const float background_image_alpha = 90.0f;
 
 			UIElement::ImageView* background_image;
-			UIElement::ButtonView* menu_button;
+			UIElement::ButtonView* continue_button;
 			UIElement::ButtonView* select_X_button;
 			UIElement::ButtonView* select_O_button;
 
@@ -43,7 +43,7 @@ namespace UI
 			void initializeBackgroundImage();
 			void initializeButtons();
 			void registerButtonCallback();
-			void MenuButtonCallback();
+			void ContinueButtonCallback();
 			void SelectXButtonCallback();
 			void SelectOButtonCallback();
 			void destroy();

@@ -11,8 +11,8 @@ namespace BoardTile
 	class BoardTileView
 	{
 	private:
-		const float board_tile_sprite_height = 280.0f;
-		const float board_tile_sprite_width = 280.0f;
+		const float board_tile_sprite_height = 250.0f;
+		const float board_tile_sprite_width = 250.0f;
 
 		BoardTileController* board_tile_controller;
 		UI::UIElement::ImageView* board_tile_image;

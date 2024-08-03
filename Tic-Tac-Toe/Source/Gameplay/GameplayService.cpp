@@ -1,6 +1,7 @@
 #include "../../Header/Gameplay/GameplayService.h"
 #include "../../Header/Gameplay/GameplayController.h"
 #include "../../header/Global/ServiceLocator.h"
+#include "../../Header/Global/Config.h"
 #include "../../Header/Main/GameService.h"
 #include "../../Header/BoardTile/BoardTileConfig.h"
 
@@ -21,13 +22,14 @@ namespace Gameplay
 	{
 		delete(gameplay_Controller);
 		gameplay_Controller = nullptr;
+		destroy();
 	}
 
 	void GameplayService::initialize()
 	{
 		gameplay_Controller->initialize();
-		initializeBoard();
-	
+		game_mode = GameMode::EASY;
+		restart();
 	}
 
 	void GameplayService::update()
@@ -43,7 +45,22 @@ namespace Gameplay
 
 	void GameplayService::restart()
 	{
+		ServiceLocator::getInstance()->getBoardTileService()->reset();
+		ServiceLocator::getInstance()->getPlayerService()->reset();
+		destroy();
+		game_over = false;
+		game_over_delay = sf::seconds(3.0);
+		turn_delay = sf::seconds(3.0);
+		initializeBoard();
+
 	}
+
+	void GameplayService::destroy()
+	{
+		board.clear();
+	}
+
+
 
 	void GameplayService::initializeBoard()
 	{
@@ -71,10 +88,23 @@ namespace Gameplay
 			if (checkWinning(board, getPlayerToTile(ServiceLocator::getInstance()->getPlayerService()->getPlayerSymbol())))
 			{
 				current_game_status = GameStatus::WON;
+				clock.restart();
 			}
 			else 
 			{
-				current_move_turn = MoveTurn::Player_2;
+				if (checkBoardForBlankTiles(board) == true)
+				{
+					current_move_turn = MoveTurn::Player_2;
+					ServiceLocator::getInstance()->getUIService()->updateContainerImage(getTurnContainerImage(player_AI));
+					ServiceLocator::getInstance()->getUIService()->updateTurnText("BOT'S TURN");
+					turn_clock.restart();
+				}
+				else 
+				{
+					current_game_status = GameStatus::DRAW;
+					clock.restart();
+				}
+				
 			}
 
 	}
@@ -129,11 +159,11 @@ namespace Gameplay
 		int bestMove = -1;
 		int bestScore = -std::numeric_limits<int>::max();
 
-		for (int i = 0; i < 9; ++i)
+		for (int i = 0; i < board_size; ++i)
 		{
 			if (board[i] == BoardTileType::Blank)
 			{
-				board[i] = getPlayerToTile(player_two);
+				board[i] = getPlayerToTile(player_AI);
 				int score = minimax(board, false);
 				board[i] = BoardTileType::Blank;
 				if (score > bestScore) {
@@ -164,7 +194,7 @@ namespace Gameplay
 		{
 			return -10;
 		}
-		else if (checkWinning(board, getPlayerToTile(player_two)))
+		else if (checkWinning(board, getPlayerToTile(player_AI)))
 		{
 			return 10;
 		}
@@ -177,11 +207,11 @@ namespace Gameplay
 		if (isMaximizing)
 		{
 			int bestScore = -std::numeric_limits<int>::max();
-			for (int i = 0; i < 9; ++i)
+			for (int i = 0; i < board_size; ++i)
 			{
 				if (board[i] == BoardTileType::Blank)
 				{
-					board[i] = getPlayerToTile(player_two);
+					board[i] = getPlayerToTile(player_AI);
 					int score = minimax(board, false);
 					board[i] = BoardTileType::Blank;
 					bestScore = std::max(score, bestScore);
@@ -192,7 +222,7 @@ namespace Gameplay
 		else
 		{
 			int bestScore = std::numeric_limits<int>::max();
-			for (int i = 0; i < 9; ++i)
+			for (int i = 0; i < board_size; ++i)
 			{
 				if (board[i] == BoardTileType::Blank)
 				{
@@ -211,48 +241,112 @@ namespace Gameplay
 
 		if (checkBoardForBlankTiles(board) == true && current_game_status==GameStatus::UNPLAYED)
 		{
-
-			if (current_move_turn == MoveTurn::Player_2)
+			if (current_move_turn == MoveTurn::Player_1)
 			{
-				int move = findBestMove(board);
-				board[move] = getPlayerToTile(player_two);
-				ServiceLocator::getInstance()->getBoardTileService()->switchBoardTile(move, getPlayerToTile(player_two));
+				ServiceLocator::getInstance()->getUIService()->updateContainerImage(getTurnContainerImage(ServiceLocator::getInstance()->getPlayerService()->getPlayerSymbol()));
+				ServiceLocator::getInstance()->getUIService()->updateTurnText("YOUR TURN");
+			}
 
-				if (checkWinning(board, getPlayerToTile(player_two)))
+			if (current_move_turn == MoveTurn::Player_2 && turn_clock.getElapsedTime()>turn_delay)
+			{
+				if (game_mode == GameMode::HARD)
+				{
+					getHardAIMove();
+				}
+				else if (game_mode == GameMode::EASY)
+				{
+					getEasyAIMove();
+				}
+						
+				if (checkWinning(board, getPlayerToTile(player_AI)))
 				{
 					current_game_status = GameStatus::LOSS;
+					clock.restart();
 				}
 				else
 				{
 					current_move_turn = MoveTurn::Player_1;
 					ServiceLocator::getInstance()->getPlayerService()->reset();
-
 				}
 
 			}
 
 		}
-		else if (checkBoardForBlankTiles(board) == false && current_game_status == GameStatus::UNPLAYED)
+
+
+		if (checkBoardForBlankTiles(board) == false && current_game_status == GameStatus::UNPLAYED)
 		{
 			current_game_status == GameStatus::DRAW;
 		}
 
 		if (current_game_status == GameStatus::WON)
 		{
-			printf("Player 1 Won");
 			markWinningTiles(board, ServiceLocator::getInstance()->getPlayerService()->getPlayerSymbol());
+			ServiceLocator::getInstance()->getUIService()->setGameOverTexture(getWinnerImage(ServiceLocator::getInstance()->getPlayerService()->getPlayerSymbol()), Config::win_text_image);
+			game_over = true;
 		}
 		else if (current_game_status == GameStatus::LOSS)
 		{
-			printf("Player 2 Won");
-			markWinningTiles(board, player_two);
+			markWinningTiles(board, player_AI);
+			ServiceLocator::getInstance()->getUIService()->setGameOverTexture(getWinnerImage(player_AI), Config::lose_text_image);
+			game_over = true; 
 		}
 		else if (current_game_status == GameStatus::DRAW)
 		{
-			printf("DRAW");
+			ServiceLocator::getInstance()->getUIService()->setGameOverTexture(Config::draw_no_winner_texture, Config::draw_text_image);
+			game_over = true; 
 		}
 
+		if (clock.getElapsedTime() > game_over_delay && game_over == true)
+		{
+			GameService::setGameState(GameState::GAMEOVER);
+		}
+	}
 
+	void GameplayService::getHardAIMove()
+	{
+		int move = findBestMove(board);
+		board[move] = getPlayerToTile(player_AI);
+		ServiceLocator::getInstance()->getBoardTileService()->switchBoardTile(move, getPlayerToTile(player_AI));
+	}
+
+	void GameplayService::getEasyAIMove()
+	{
+		int move;
+
+		do 
+		{
+		  move = rand() % board_size;
+		} while (board[move] != BoardTileType::Blank);
+
+		board[move] = getPlayerToTile(player_AI);
+
+		ServiceLocator::getInstance()->getBoardTileService()->switchBoardTile(move, getPlayerToTile(player_AI));
+	}
+
+
+	sf::String GameplayService::getWinnerImage(PlayerSymbol player_type)
+	{
+		switch (player_type)
+		{
+		case::Player::PlayerSymbol::PLAYER_X:
+			return Config::winner_cross_texture;
+
+		case::Player::PlayerSymbol::PLAYER_O:
+			return Config::winner_circle_texture;
+		}
+	}
+
+	sf::String GameplayService::getTurnContainerImage(PlayerSymbol player_type)
+	{
+		switch (player_type)
+		{
+		case::Player::PlayerSymbol::PLAYER_X:
+			return Config::turn_cross_image;
+
+		case::Player::PlayerSymbol::PLAYER_O:
+			return Config::turn_circle_image;
+		}
 	}
 
 	void GameplayService::markWinningTiles(std::vector<BoardTile::BoardTileType> board, PlayerSymbol player_type)
@@ -320,9 +414,13 @@ namespace Gameplay
 
 	void GameplayService::setPlayerTwoSymbol(Player::PlayerSymbol symbol)
 	{
-		player_two = symbol;
+		player_AI = symbol;
 	}
 
+	void GameplayService::setGameMode(GameMode mode)
+	{
+		game_mode = mode;
+	}
 
 	
 }

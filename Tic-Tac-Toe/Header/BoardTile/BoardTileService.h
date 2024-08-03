@@ -14,9 +14,9 @@ namespace BoardTile
 		std::vector<sf::Vector2f> board_tile_position_list;
 
 		const int board_row_col_size = 3;
-		const float board_tile_x_pos = 520.f;
-		const float board_tile_y_pos = 100.f;
-		const float board_tile_offset = 300.f;
+		const float board_tile_x_pos = 565.f;
+		const float board_tile_y_pos = 200.f;
+		const float board_tile_offset = 270.f;
 
 		void destroy();
 
